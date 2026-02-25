@@ -11,7 +11,7 @@ Provisioning via Terraform, configuration via Ansible.
 **Image Building**: Packer (AMI)
 
 ## Structure du dépôt
-À compléter au fil des séances.
+docs/ : Documentation d'architecture
 
 ## Auteur
 Nom: Enzo Deslions
