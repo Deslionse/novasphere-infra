@@ -1,0 +1,25 @@
+{# templates/index.html.j2 #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ app_name }} - {{ env }}</title>
+    <style>
+        body { font-family: sans-serif; margin: 50px; line-height: 1.6; }
+        th { background: #3498db; color: white; padding: 10px; }
+        td { border: 1px solid #ddd; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>{{ app_name }}</h1>
+    <table>
+        <tr><th>Information</th><th>Valeur</th></tr>
+        <tr><td>Environnement</td><td>{{ env }}</td></tr>
+        <tr><td>Version</td><td>{{ app_version }}</td></tr>
+        <tr><td>Hôte</td><td>{{ inventory_hostname }}</td></tr>
+        <tr><td>IP Publique</td><td>{{ ansible_host }}</td></tr>
+        <tr><td>Paquets installés</td><td>{{ packages | join(', ') }}</td></tr>
+    </table>
+    <p><em>Généré par Ansible - Ne pas modifier manuellement.</em></p>
+</body>
+</html>

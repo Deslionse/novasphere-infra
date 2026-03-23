@@ -1,0 +1,17 @@
+# group_vars/webservers.yml
+app_name: "NovaSphere"
+app_version: "2.0"
+env: "dev"
+http_port: 80
+
+# Liste des paquets à installer via boucle
+packages:
+  - nginx
+  - curl
+  - htop
+  - tree
+  - jq
+
+# Configuration Nginx
+nginx_server_name: "_"
+nginx_root: "/var/www/html"

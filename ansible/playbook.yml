@@ -1,38 +1,29 @@
 ---
-- name: Configuration du serveur web NovaSphere
+- name: S06 - Playbook parametre NovaSphere
   hosts: webservers
   become: true
-
   tasks:
-    - name: Mettre à jour le cache APT
+    - name: Mettre a jour le cache APT
       ansible.builtin.apt:
         update_cache: true
         cache_valid_time: 3600
 
-    - name: Installer Nginx
+    - name: Installer les paquets requis
       ansible.builtin.apt:
-        name: nginx
+        name: "{{ item }}"
         state: present
+      loop: "{{ packages }}"
 
-    - name: S'assurer que Nginx est démarré et activé au boot
+    - name: Deployer la page d'accueil via Template
+      ansible.builtin.template:
+        src: templates/index.html.j2
+        dest: "{{ nginx_root }}/index.html"
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: S'assurer que Nginx est demarre
       ansible.builtin.service:
         name: nginx
         state: started
         enabled: true
-
-    - name: Déployer la page d'accueil NovaSphere
-      ansible.builtin.copy:
-        dest: /var/www/html/index.html
-        content: |
-          <!DOCTYPE html>
-          <html>
-          <head><title>NovaSphere</title></head>
-          <body>
-          <h1>Bienvenue sur NovaSphere</h1>
-          <p>Serveur configuré automatiquement par Ansible.</p>
-          <p>Environnement dev</p>
-          </body>
-          </html>
-        owner: www-data
-        group: www-data
-        mode: "0644"
