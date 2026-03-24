@@ -1,29 +1,6 @@
 ---
-- name: S06 - Playbook parametre NovaSphere
+- name: S07 - Deploiement via Roles
   hosts: webservers
   become: true
-  tasks:
-    - name: Mettre a jour le cache APT
-      ansible.builtin.apt:
-        update_cache: true
-        cache_valid_time: 3600
-
-    - name: Installer les paquets requis
-      ansible.builtin.apt:
-        name: "{{ item }}"
-        state: present
-      loop: "{{ packages }}"
-
-    - name: Deployer la page d'accueil via Template
-      ansible.builtin.template:
-        src: templates/index.html.j2
-        dest: "{{ nginx_root }}/index.html"
-        owner: www-data
-        group: www-data
-        mode: '0644'
-
-    - name: S'assurer que Nginx est demarre
-      ansible.builtin.service:
-        name: nginx
-        state: started
-        enabled: true
+  roles:
+    - webserver
